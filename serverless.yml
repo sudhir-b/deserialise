@@ -1,0 +1,18 @@
+service: deserialise
+
+frameworkVersion: "3"
+
+plugins:
+  - serverless-plugin-typescript
+
+provider:
+  name: aws
+  runtime: nodejs16.x
+  stage: dev
+  region: eu-west-1
+  profile: personal
+
+functions:
+  hello:
+    handler: handler.hello
+    url: true
