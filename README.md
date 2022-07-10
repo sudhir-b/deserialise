@@ -112,7 +112,7 @@ In `./ts`, first run `yarn install`.
 
 Then, run `sls deploy --aws-profile <AWS_PROFILE>`
 
-You may omit `--profile` if you have a default AWS profile set up.
+You may omit `--aws-profile` if you have a default AWS profile set up.
 
 ## Limitations & future work
 
@@ -139,6 +139,7 @@ un-idiomatic code in this project - let me know what can be done better!
 In no particular order:
 
 - Improve error handling
+- Maybe don't use the Rust lambda via its Function URL?
 - Provide an option to 'metaplex-ise' the deserialised account data
 - Allow custom cluster URLs
 - Be able to deploy both Lambda functions with the same tool/command (try AWS CDK?)
