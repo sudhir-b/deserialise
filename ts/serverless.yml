@@ -13,6 +13,8 @@ provider:
   profile: personal
 
 functions:
-  hello:
-    handler: handler.hello
+  deserialise:
+    handler: handler.deserialise
     url: true
+    environment:
+      IDL_FUNCTION_URL: ${ssm:idl_function_url}
