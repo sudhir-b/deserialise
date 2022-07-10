@@ -10,7 +10,6 @@ provider:
   runtime: nodejs16.x
   stage: dev
   region: eu-west-1
-  profile: personal
 
 functions:
   deserialise:

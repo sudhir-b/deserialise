@@ -41,7 +41,7 @@ export async function deserialise(event, context) {
     return respond(400, { error: "No accountID provided" });
   }
 
-  let cluster, clusterUrl;
+  let cluster;
   if (!("cluster" in event.queryStringParameters)) {
     cluster = "mainnet-beta";
   } else {
@@ -49,8 +49,8 @@ export async function deserialise(event, context) {
     if (!(cluster in CLUSTER_URL_MAP)) {
       return respond(400, { error: "Invalid cluster provided" });
     }
-    clusterUrl = CLUSTER_URL_MAP[cluster];
   }
+  const clusterUrl = CLUSTER_URL_MAP[cluster];
 
   const connection = new web3.Connection(clusterUrl, commitment);
   const tempWallet = new Wallet(web3.Keypair.generate());
@@ -84,23 +84,26 @@ export async function deserialise(event, context) {
   );
 
   console.debug(idlResponse);
-
   if (idlResponse.status !== 200) {
     return respond(400, { error: "Error fetching IDL" });
   }
 
   const idl = idlResponse.data;
+  console.debug(idl);
 
   const program = new Program(idl, programId, provider);
 
-  const account = await program.account[
-    event.queryStringParameters.accountType
-  ].fetch(accountId);
+  let account;
+  try {
+    account = await program.account[
+      event.queryStringParameters.accountType
+    ].fetch(accountId);
+  } catch (error) {
+    console.debug(error);
+    return respond(400, { error: "Error retrieving account data" });
+  }
 
   console.debug(account);
 
   return respond(200, account);
 }
-
-// test url query params
-// programId=GrAkKfEpTKQuVHG2Y97Y2FF4i7y7Q5AHLK94JBy7Y5yv&accountType=registrar&accountId=43JchZn2K9ZD1dAfP9hTNUSWFvWYhK8df7R5RKeVQB2G
