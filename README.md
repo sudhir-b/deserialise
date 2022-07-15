@@ -14,7 +14,7 @@ a custom domain) with plain HTTP GET requests.
   - base 58 encoded public key
 - `accountType`
   - **required**
-  - base 58 encoded public key
+  - string
 - `cluster`
   - optional
   - if specified, must be one of: `mainnet-beta`, `testnet`, `devnet`
